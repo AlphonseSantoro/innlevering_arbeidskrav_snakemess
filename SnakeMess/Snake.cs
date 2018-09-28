@@ -17,8 +17,16 @@ namespace SnakeMess {
             return snakeParts;
         }
 
-        public void addPart(){
-            return new SnakePart();
+        public void addPart(int x, int y, Marker marker){
+            snakeParts.Add(new SnakePart(x,y, marker));
+        }
+
+        public static bool operator ==(Coordinate cord1, Coordinate cord2){
+            if (cord1.x == cord2.x && cord1.y == cord2.y){
+                return true;
+            }
+
+            return false;
         }
 
 
