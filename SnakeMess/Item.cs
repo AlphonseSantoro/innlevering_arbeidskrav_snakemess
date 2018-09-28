@@ -25,7 +25,8 @@ namespace SnakeMess{
 
   public enum Marker{
     HEAD = '@',
-    PART = '0',
+    BODY = '0',
+	TAIL = ' ',
     FOOD = '$'
   }
 }

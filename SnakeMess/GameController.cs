@@ -19,18 +19,26 @@ namespace SnakeMess {
 		private MoveDirection _lastDir;
 		private Snake _snake;
 		private Food _food;
-		private Stopwatch _t = new Stopwatch();
+		private Stopwatch _t;
 
 		GameController() {
 
+			_snake = new Snake();
+			_food = new Food(); //TODO: Parameters!!!
+			_t = new Stopwatch();
+
+			GameLoop();
 		}
 
 		private void GameLoop() {
 			_t.Start();
 
+			//Game loops that loops untill its game over
 			while(!gameOver) {
+
 				if(Console.KeyAvailable) {
 					ConsoleKeyInfo consoleKeyinfo = Console.ReadKey(true);
+					//Detect diffrent key presses
 					if(consoleKeyinfo.Key == ConsoleKey.Escape)
 						gameOver = true;
 					else if(consoleKeyinfo.Key == ConsoleKey.Spacebar)
@@ -46,9 +54,37 @@ namespace SnakeMess {
 					
 				}
 				if(!gamePaused) {
+					//Game speed delay
 					if(_t.ElapsedMilliseconds < 100)
 						continue;
 					_t.Restart();
+
+					//Move snake
+					_snake.Move(_newDir);
+
+					//Check for death
+					if(_snake.Collide()) {
+						gameOver = true;
+						break;
+					}
+
+					//If snake is on top of food, eat it
+					if(_snake.IsFoodInSnake(_food)) {
+						_snake.eat();
+						_food = new Food(); //TODO: Parameters!!!
+					}
+					//While food is inside snake, respawn it
+					while(true) {
+						if(_snake.IsFoodInSnake(_food)) {
+							_food = new Food(); //TODO: Parameters!!!
+						} else {
+							break;
+						}
+					}
+					
+
+					/*
+
 					Point tail = new Point(snake.First());
 					Point head = new Point(snake.Last());
 					Point newHead = new Point(head); // the new head position
@@ -90,15 +126,7 @@ namespace SnakeMess {
 							}
 						}
 					}
-					if(!inUse) {
-						snake.RemoveAt(0);
-						foreach(Point x in snake)
-							if(x.X == newHead.X && x.Y == newHead.Y) {
-								// Death by accidental self-cannibalism.
-								gameOver = true;
-								break;
-							}
-					}
+					*/
 					if(!gameOver) {
 						Console.ForegroundColor = ConsoleColor.Yellow;
 						Console.SetCursorPosition(head.X, head.Y); Console.Write("0");
@@ -118,9 +146,10 @@ namespace SnakeMess {
 		}
 
 
-		private bool IsFoodInSnake() {
 
-		}
+
+
+
 
 	}
 }
