@@ -21,12 +21,20 @@ namespace SnakeMess{
       if (item1.coordinate != item2.coordinate) return true;
       return false;
     }
+    
+    public int getX(){
+      return coordinate.X; 
+    }
+    
+    public int getY(){
+      return coordinate.Y; 
+    }
   }
 
   public enum Marker{
     HEAD = '@',
     BODY = '0',
-	TAIL = ' ',
+	  TAIL = ' ',
     FOOD = '$'
   }
 }
