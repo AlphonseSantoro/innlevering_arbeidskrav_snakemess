@@ -11,7 +11,7 @@ namespace SnakeMess {
 
         public Snake(int startX = 10, int startY = 10, int length = 4){
             for (int i = 0; i < length-1; i++){
-                addPart(startX, startY-i, Marker.PART);
+                addPart(startX, startY-i, Marker.BODY);
             }
             addPart(startX, startY, Marker.HEAD);
         }
