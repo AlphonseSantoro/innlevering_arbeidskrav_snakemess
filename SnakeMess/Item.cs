@@ -12,13 +12,13 @@ namespace SnakeMess{
       coordinate = new Coordinate();
     }
 
-    public static bool operator ==(Coordinate cord1, Coordinate cord2){
-      if (cord1 == cord2) return true;
+    public static bool operator ==(Item item1, Item item2){
+      if (item1.coordinate == item2.coordinate) return true;
       return false;
     }
 
-    public static bool operator !=(Coordinate cord1, Coordinate cord2){
-      if (cord1 != cord2) return true;
+    public static bool operator !=(Item item1, Item item2){
+      if (item1.coordinate != item2.coordinate) return true;
       return false;
     }
   }
