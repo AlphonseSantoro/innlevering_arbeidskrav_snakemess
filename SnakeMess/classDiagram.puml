@@ -1,4 +1,65 @@
 @startuml
+class Coordinate{
+    +x: int
+    +y: int
+    Coordinate()
+    Coordinate(int x, int y)
+    +getCoordinate()
+    +operator ==(otherCoordinate : Coordinate) : bool
+}
+
+
+Item "0..*" --* "1" Coordinate
+class Item {
+    -coordinate: Coordinate
+    -marker: Enum
+    +getMarker(): char
+    +Item(x, y, marker)
+    +getCoordinate()
+    +operator ==(item Item) : bool
+    ==
+    Enum Marker
+}
+
+SnakePart --|> Item
+class SnakePart{
+}
+
+
+
+Snake --* SnakePart
+class Snake{
+-List<SnakePart> snakeParts
+-Item head
+-Item tail
+
++Snake(startX : int = 10, startY : int = 10, length : int = 4)
++getSnakeParts(): List<Item>
++gethead() : Item
++setHead()
++addPart()
++getTail() : Item
++operator ==(coordinate : Coordinate) : bool
+}
+
+GameController --* Coordinate
+GameController --* Snake
+GameController --* Food
+class GameController{
+gameOver: bool
+pause: bool
+Snake: Snake
+Food: Food
+coordinate: Coordinate
++setPressedKey()
++isFoodInSnake()
++isFoodPresent()
++createFood()
+}
+
+Food --|> Item
+class Food{
+}
 
 class Test1
 class Test2

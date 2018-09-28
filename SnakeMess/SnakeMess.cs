@@ -20,7 +20,11 @@ namespace SnakeMess
 		public const string Ok = "Ok";
 
 		public int X; public int Y;
-		public Point(int x = 0, int y = 0) { X = x; Y = y; }
+
+	    public Point(int x = 0, int y = 0)
+	    {
+	        X = x; Y = y;
+	    }
 		public Point(Point input) { X = input.X; Y = input.Y; }
 	}
 
@@ -28,24 +32,26 @@ namespace SnakeMess
 	{
 		public static void Main(string[] arguments)
 		{
-			bool gg = false, pause = false, inUse = false;
-			short newDir = 1; // 0 = up, 1 = right, 2 = down, 3 = left
+			bool gg = false, pause = false, inUse = false; // gg -> has lost or not
+			short newDir = 2; // 0 = up, 1 = right, 2 = down, 3 = left
 			short last = newDir;
-			int boardW = Console.WindowWidth, boardH = Console.WindowHeight;
-			Random rng = new Random();
-			Point app = new Point();
-			List<Point> snake = new List<Point>();
-			snake.Add(new Point(10, 10)); snake.Add(new Point(10, 10)); snake.Add(new Point(10, 10)); snake.Add(new Point(10, 10));
+			int boardWidth = Console.WindowWidth, boardHeight = Console.WindowHeight; // Sets the size of board -> Height and Width
+			Random rng = new Random(); // generates random number -> used for placement of "$"
+			Point app = new Point(); // Snake food -> "$"
+			List<Point> snake = new List<Point>(); //snake List containing snake itmens
+			snake.Add(new Point(10, 10)); snake.Add(new Point(10, 10)); snake.Add(new Point(10, 10)); snake.Add(new Point(10, 10)); //init snakeLength
 			Console.CursorVisible = false;
 			Console.Title = "Høyskolen Kristiania - SNAKE";
-			Console.ForegroundColor = ConsoleColor.Green; Console.SetCursorPosition(10, 10); Console.Write("@");
+			//Console.ForegroundColor = ConsoleColor.Green; 
+		    //Console.SetCursorPosition(10, 10); 
+		    //Console.Write("@");
 			while (true) {
-				app.X = rng.Next(0, boardW); app.Y = rng.Next(0, boardH);
+				app.X = rng.Next(0, boardWidth); app.Y = rng.Next(0, boardHeight);
 				bool spot = true;
-				foreach (Point i in snake)
-					if (i.X == app.X && i.Y == app.Y) {
+				foreach (Point i in snake) // for each part in snake
+					if (i.X == app.X && i.Y == app.Y) { // check snake part coordinates
 						spot = false;
-						break;
+						break; // 
 					}
 				if (spot) {
 					Console.ForegroundColor = ConsoleColor.Green; Console.SetCursorPosition(app.X, app.Y); Console.Write("$");
@@ -76,7 +82,7 @@ namespace SnakeMess
 					t.Restart();
 					Point tail = new Point(snake.First());
 					Point head = new Point(snake.Last());
-					Point newH = new Point(head);
+					Point newH = new Point(head); // the new head position
 					switch (newDir) {
 						case 0:
 							newH.Y -= 1;
@@ -91,17 +97,17 @@ namespace SnakeMess
 							newH.X -= 1;
 							break;
 					}
-					if (newH.X < 0 || newH.X >= boardW)
+					if (newH.X < 0 || newH.X >= boardWidth)
 						gg = true;
-					else if (newH.Y < 0 || newH.Y >= boardH)
+					else if (newH.Y < 0 || newH.Y >= boardHeight)
 						gg = true;
 					if (newH.X == app.X && newH.Y == app.Y) {
-						if (snake.Count + 1 >= boardW * boardH)
+						if (snake.Count + 1 >= boardWidth * boardHeight)
 							// No more room to place apples - game over.
 							gg = true;
 						else {
 							while (true) {
-								app.X = rng.Next(0, boardW); app.Y = rng.Next(0, boardH);
+								app.X = rng.Next(0, boardWidth); app.Y = rng.Next(0, boardHeight);
 								bool found = true;
 								foreach (Point i in snake)
 									if (i.X == app.X && i.Y == app.Y) {
