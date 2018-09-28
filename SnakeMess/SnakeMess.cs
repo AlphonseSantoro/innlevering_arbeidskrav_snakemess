@@ -29,7 +29,7 @@ namespace SnakeMess
 		public static void Main(string[] arguments)
 		{
 			bool gg = false, pause = false, inUse = false;
-			short newDir = 2; // 0 = up, 1 = right, 2 = down, 3 = left
+			short newDir = 1; // 0 = up, 1 = right, 2 = down, 3 = left
 			short last = newDir;
 			int boardW = Console.WindowWidth, boardH = Console.WindowHeight;
 			Random rng = new Random();
