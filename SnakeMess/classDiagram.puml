@@ -61,9 +61,4 @@ Food --|> Item
 class Food{
 }
 
-class Test1
-class Test2
-
-Test1 --- Test2
-
 @enduml
