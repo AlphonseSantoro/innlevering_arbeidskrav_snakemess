@@ -6,8 +6,6 @@ using System.Text;
 namespace SnakeMess {
     class SnakePart : Item {
 
-        public SnakePart(int x, int y){
-            base(x, y);
-        }
+        public SnakePart(int x, int y, Marker marker) : base(x, y, marker){}
     }
 }
