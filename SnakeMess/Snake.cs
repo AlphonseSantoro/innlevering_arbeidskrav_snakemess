@@ -7,7 +7,9 @@ namespace SnakeMess {
     class Snake {
         List<SnakePart> snakeParts = new List<SnakePart>();
         public SnakePart head{ get; private set; }
+        public SnakePart newHead { get; private set; }
         public SnakePart tail{ get; private set; }
+        
 
         public Snake(int startX = 10, int startY = 10, int length = 4){
             for (int i = 0; i < length-1; i++){
@@ -15,14 +17,15 @@ namespace SnakeMess {
             }
             addPart(startX, startY, Marker.HEAD);
         }
-        Point tail = new Point(SnakePart.First());
-        Point head = new Point(SnakePart.Last());
-        Point newHead = new Point(head); // the new head position
 
+        //FIX NEW VALUE FOR NEW HEAD X and Y
         public void move(GameController.MoveDirection direction){
+            tail = snakeParts.First();
+            head = snakeParts.Last();
+            newHead = new SnakePart(head.getX(), head.getY(), Marker.HEAD);
+            head.marker = Marker.BODY;
             switch (direction){
                 case GameController.MoveDirection.UP:
-                    tail = new SnakePart(snakeParts.First(), snakeParts.First(), Marker.TAIL);
                     break;
                 case GameController.MoveDirection.DOWN:
                     break;
@@ -33,6 +36,9 @@ namespace SnakeMess {
             }
 
         }
+
+
+        
 
         public List<SnakePart> getSnakeParts(){
             return snakeParts;
