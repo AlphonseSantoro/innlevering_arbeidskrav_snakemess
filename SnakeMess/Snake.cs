@@ -15,6 +15,24 @@ namespace SnakeMess {
             }
             addPart(startX, startY, Marker.HEAD);
         }
+        Point tail = new Point(SnakePart.First());
+        Point head = new Point(SnakePart.Last());
+        Point newHead = new Point(head); // the new head position
+
+        public void move(GameController.MoveDirection direction){
+            switch (direction){
+                case GameController.MoveDirection.UP:
+                    tail = new SnakePart(snakeParts.First(), snakeParts.First(), Marker.TAIL);
+                    break;
+                case GameController.MoveDirection.DOWN:
+                    break;
+                case GameController.MoveDirection.LEFT:
+                    break;
+                case GameController.MoveDirection.RIGHT:
+                    break;
+            }
+
+        }
 
         public List<SnakePart> getSnakeParts(){
             return snakeParts;
@@ -23,25 +41,12 @@ namespace SnakeMess {
         public void addPart(int x, int y, Marker marker){
             snakeParts.Add(new SnakePart(x,y, marker));
         }
-
-        public bool IsFoodInSnake(Food food){
+        
+        private bool IsFoodInSnake(Food food) {
             foreach(SnakePart part in snakeParts){
                 if(part == food) return true;
             }
             return false;
-        }
-        
-        private bool IsItemInSnake(Item item) {
-            for(int i = 0; i < snakeParts.Count-2; i++){
-                if(snakeParts[i] == item) return true;
-            }
-            return false;
-        }
-
-        public bool Collide(){
-            if (IsItemInSnake(snakeParts.Last())) return true;
-            if (snakeParts.Last().coordinate > )
-                return false;
         }
     }
 }
