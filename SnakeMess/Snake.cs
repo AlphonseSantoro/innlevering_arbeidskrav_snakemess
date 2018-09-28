@@ -11,9 +11,9 @@ namespace SnakeMess {
 
         public Snake(int startX = 10, int startY = 10, int length = 4){
             for (int i = 0; i < length-1; i++){
-                snakeParts.Add(new SnakePart(startX, startY-i, Marker.PART));
+                addPart(startX, startY-i, Marker.PART);
             }
-            snakeParts.Add(new SnakePart(startX, startY, Marker.HEAD));
+            addPart(startX, startY, Marker.HEAD);
         }
 
         public List<SnakePart> getSnakeParts(){
