@@ -1,7 +1,7 @@
 namespace SnakeMess{
   public class Item{
     private Coordinate coordinate{ get; set; }
-    private Marker marker{ get; set; }
+    public Marker marker{ get; set; }
 
     public Item(int x, int y, Marker marker){
       this.marker = marker;
