@@ -48,9 +48,26 @@ namespace SnakeMess {
             snakeParts.Add(new SnakePart(x,y, marker));
         }
         
-        private bool IsFoodInSnake(Food food) {
+        public bool IsFoodInSnake(Food food){
             foreach(SnakePart part in snakeParts){
                 if(part == food) return true;
+            }
+            return false;
+        }
+        
+        private bool IsItemInSnake(Item item) {
+            for(int i = 0; i < snakeParts.Count-2; i++){
+                if(snakeParts[i] == item) return true;
+            }
+            return false;
+        }
+
+        public bool Collide(){
+            if (IsItemInSnake(snakeParts.Last())) return true;
+            if (snakeParts.Last().getX() < 0 || snakeParts.Last().getY() < 0 ||
+                snakeParts.Last().getX() > GameController.windowWidth ||
+                snakeParts.Last().getY() > GameController.windowHeight){
+                return true;
             }
             return false;
         }
