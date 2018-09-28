@@ -32,12 +32,12 @@ namespace SnakeMess
 	{
 		public static void Main(string[] arguments)
 		{
-			bool gg = false, pause = false, inUse = false; // gg -> has lost or not
+			bool gameOver = false, pause = false, inUse = false; // gg -> has lost or not
 			short newDir = 2; // 0 = up, 1 = right, 2 = down, 3 = left
 			short last = newDir;
 			int boardWidth = Console.WindowWidth, boardHeight = Console.WindowHeight; // Sets the size of board -> Height and Width
-			Random rng = new Random(); // generates random number -> used for placement of "$"
-			Point app = new Point(); // Snake food -> "$"
+			Random rand = new Random(); // generates random number -> used for placement of "$"
+			Point snakeFood = new Point(); // Snake food -> "$"
 			List<Point> snake = new List<Point>(); //snake List containing snake itmens
 			snake.Add(new Point(10, 10)); snake.Add(new Point(10, 10)); snake.Add(new Point(10, 10)); snake.Add(new Point(10, 10)); //init snakeLength
 			Console.CursorVisible = false;
@@ -46,34 +46,34 @@ namespace SnakeMess
 		    //Console.SetCursorPosition(10, 10); 
 		    //Console.Write("@");
 			while (true) {
-				app.X = rng.Next(0, boardWidth); app.Y = rng.Next(0, boardHeight);
+				snakeFood.X = rand.Next(0, boardWidth); snakeFood.Y = rand.Next(0, boardHeight);
 				bool spot = true;
 				foreach (Point i in snake) // for each part in snake
-					if (i.X == app.X && i.Y == app.Y) { // check snake part coordinates
+					if (i.X == snakeFood.X && i.Y == snakeFood.Y) { // check snake part coordinates
 						spot = false;
 						break; // 
 					}
 				if (spot) {
-					Console.ForegroundColor = ConsoleColor.Green; Console.SetCursorPosition(app.X, app.Y); Console.Write("$");
+					Console.ForegroundColor = ConsoleColor.Green; Console.SetCursorPosition(snakeFood.X, snakeFood.Y); Console.Write("$");
 					break;
 				}
 			}
 			Stopwatch t = new Stopwatch();
 			t.Start();
-			while (!gg) {
+			while (!gameOver) {
 				if (Console.KeyAvailable) {
-					ConsoleKeyInfo cki = Console.ReadKey(true);
-					if (cki.Key == ConsoleKey.Escape)
-						gg = true;
-					else if (cki.Key == ConsoleKey.Spacebar)
+					ConsoleKeyInfo consoleKeyinfo = Console.ReadKey(true);
+					if (consoleKeyinfo.Key == ConsoleKey.Escape)
+						gameOver = true;
+					else if (consoleKeyinfo.Key == ConsoleKey.Spacebar)
 						pause = !pause;
-					else if (cki.Key == ConsoleKey.UpArrow && last != 2)
+					else if (consoleKeyinfo.Key == ConsoleKey.UpArrow && last != 2)
 						newDir = 0;
-					else if (cki.Key == ConsoleKey.RightArrow && last != 3)
+					else if (consoleKeyinfo.Key == ConsoleKey.RightArrow && last != 3)
 						newDir = 1;
-					else if (cki.Key == ConsoleKey.DownArrow && last != 0)
+					else if (consoleKeyinfo.Key == ConsoleKey.DownArrow && last != 0)
 						newDir = 2;
-					else if (cki.Key == ConsoleKey.LeftArrow && last != 1)
+					else if (consoleKeyinfo.Key == ConsoleKey.LeftArrow && last != 1)
 						newDir = 3;
 				}
 				if (!pause) {
@@ -82,35 +82,35 @@ namespace SnakeMess
 					t.Restart();
 					Point tail = new Point(snake.First());
 					Point head = new Point(snake.Last());
-					Point newH = new Point(head); // the new head position
+					Point newHead = new Point(head); // the new head position
 					switch (newDir) {
 						case 0:
-							newH.Y -= 1;
+							newHead.Y -= 1;
 							break;
 						case 1:
-							newH.X += 1;
+							newHead.X += 1;
 							break;
 						case 2:
-							newH.Y += 1;
+							newHead.Y += 1;
 							break;
 						default:
-							newH.X -= 1;
+							newHead.X -= 1;
 							break;
 					}
-					if (newH.X < 0 || newH.X >= boardWidth)
-						gg = true;
-					else if (newH.Y < 0 || newH.Y >= boardHeight)
-						gg = true;
-					if (newH.X == app.X && newH.Y == app.Y) {
+					if (newHead.X < 0 || newHead.X >= boardWidth)
+						gameOver = true;
+					else if (newHead.Y < 0 || newHead.Y >= boardHeight)
+						gameOver = true;
+					if (newHead.X == snakeFood.X && newHead.Y == snakeFood.Y) {
 						if (snake.Count + 1 >= boardWidth * boardHeight)
 							// No more room to place apples - game over.
-							gg = true;
+							gameOver = true;
 						else {
 							while (true) {
-								app.X = rng.Next(0, boardWidth); app.Y = rng.Next(0, boardHeight);
+								snakeFood.X = rand.Next(0, boardWidth); snakeFood.Y = rand.Next(0, boardHeight);
 								bool found = true;
 								foreach (Point i in snake)
-									if (i.X == app.X && i.Y == app.Y) {
+									if (i.X == snakeFood.X && i.Y == snakeFood.Y) {
 										found = false;
 										break;
 									}
@@ -124,23 +124,23 @@ namespace SnakeMess
 					if (!inUse) {
 						snake.RemoveAt(0);
 						foreach (Point x in snake)
-							if (x.X == newH.X && x.Y == newH.Y) {
+							if (x.X == newHead.X && x.Y == newHead.Y) {
 								// Death by accidental self-cannibalism.
-								gg = true;
+								gameOver = true;
 								break;
 							}
 					}
-					if (!gg) {
+					if (!gameOver) {
 						Console.ForegroundColor = ConsoleColor.Yellow;
 						Console.SetCursorPosition(head.X, head.Y); Console.Write("0");
 						if (!inUse) {
 							Console.SetCursorPosition(tail.X, tail.Y); Console.Write(" ");
 						} else {
-							Console.ForegroundColor = ConsoleColor.Green; Console.SetCursorPosition(app.X, app.Y); Console.Write("$");
+							Console.ForegroundColor = ConsoleColor.Green; Console.SetCursorPosition(snakeFood.X, snakeFood.Y); Console.Write("$");
 							inUse = false;
 						}
-						snake.Add(newH);
-						Console.ForegroundColor = ConsoleColor.Yellow; Console.SetCursorPosition(newH.X, newH.Y); Console.Write("@");
+						snake.Add(newHead);
+						Console.ForegroundColor = ConsoleColor.Yellow; Console.SetCursorPosition(newHead.X, newHead.Y); Console.Write("@");
 						last = newDir;
 					}
 				}
