@@ -4,46 +4,95 @@ using System.Linq;
 using System.Text;
 
 namespace SnakeMess {
-    class Snake {
-        List<SnakePart> snakeParts = new List<SnakePart>();
-        public SnakePart head{ get; private set; }
-        public SnakePart tail{ get; private set; }
+    public class Snake {
+        
+	    public List<SnakePart> SnakeParts = new List<SnakePart>();
 
-        public Snake(int startX = 10, int startY = 10, int length = 4){
+	    private bool hasEaten = false;
+	    private SnakePart head;
+	    private SnakePart tail;
+	    private SnakePart newHead;
+
+
+		public Snake(int startX = 10, int startY = 10, int length = 4){
             for (int i = 0; i < length-1; i++){
-                addPart(startX, startY-i, Marker.BODY);
+                addPart(startX, startY, Markers.BODY);
             }
-            addPart(startX, startY, Marker.HEAD);
+            addPart(startX, startY, Markers.HEAD);
         }
-        Point tail = new Point(SnakePart.First());
-        Point head = new Point(SnakePart.Last());
-        Point newHead = new Point(head); // the new head position
-
-        public void move(GameController.MoveDirection direction){
-            switch (direction){
-                case GameController.MoveDirection.UP:
-                    tail = new SnakePart(snakeParts.First(), snakeParts.First(), Marker.TAIL);
+		
+		
+		public void Move(MoveDirection direction) {
+			tail = new SnakePart(SnakeParts.First());
+			head = new SnakePart(SnakeParts.Last(), Markers.BODY);
+			newHead = new SnakePart(SnakeParts.Last(), Markers.HEAD);
+			switch(direction){
+                case MoveDirection.UP:
+					newHead.Coord.Y -= 1;
                     break;
-                case GameController.MoveDirection.DOWN:
-                    break;
-                case GameController.MoveDirection.LEFT:
-                    break;
-                case GameController.MoveDirection.RIGHT:
-                    break;
+                case MoveDirection.DOWN:
+					newHead.Coord.Y += 1;
+				break;
+                case MoveDirection.LEFT:
+					newHead.Coord.X -= 1;
+				break;
+                case MoveDirection.RIGHT:
+					newHead.Coord.X += 1;
+				break;
             }
-
         }
 
-        public List<SnakePart> getSnakeParts(){
-            return snakeParts;
-        }
+	    public bool Collide() {
+		    foreach(SnakePart part in SnakeParts) {
+			    if(part == newHead) return true;
+		    }
+		    if(head.Coord.X < 0 || head.Coord.X > GameController.windowWidth) {
+			    return true;
+		    }
+		    if(head.Coord.Y < 0	|| head.Coord.Y > GameController.windowHeight) {
+			    return true;
+		    }
+		    return false;
+	    }
 
-        public void addPart(int x, int y, Marker marker){
-            snakeParts.Add(new SnakePart(x,y, marker));
+	    public void Eat() {
+		    hasEaten = true;
+	    }
+
+	    public void DrawSnake() {
+
+		    Console.ForegroundColor = ConsoleColor.Yellow;
+		    SnakePart sp;
+
+			if(!hasEaten) {
+				SnakeParts.RemoveAt(0);
+			    Console.SetCursorPosition(tail.Coord.X, tail.Coord.Y);
+			    Console.Write(Markers.TAIL);
+			} else {
+				hasEaten = false;
+			}
+
+			Console.SetCursorPosition(head.Coord.X, head.Coord.Y);
+		    Console.Write(head.icon);
+
+		    sp = SnakeParts.ElementAt(SnakeParts.Count - 2);
+		    Console.SetCursorPosition(sp.Coord.X, sp.Coord.Y);
+			Console.Write(Markers.BODY);
+
+		    SnakeParts.Add(newHead);
+			Console.ForegroundColor = ConsoleColor.Yellow;
+		    Console.SetCursorPosition(newHead.Coord.X, newHead.Coord.Y);
+		    Console.Write(newHead.icon);
+
+		}
+
+
+		public void addPart(int x, int y, char marker) {
+			SnakeParts.Add(new SnakePart(x, y, marker));
         }
         
-        private bool IsFoodInSnake(Food food) {
-            foreach(SnakePart part in snakeParts){
+        public bool IsFoodInSnake(Food food) {
+            foreach(SnakePart part in SnakeParts){
                 if(part == food) return true;
             }
             return false;
