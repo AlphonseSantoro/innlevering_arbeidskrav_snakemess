@@ -5,10 +5,10 @@ using System.Linq;
 using System.Text;
 
 namespace SnakeMess {
-	class Coordinate {
+	public class Coordinate {
 		
-		public int X { get; private set; }
-		public int Y { get; private set; }
+		public int X { get; set; }
+		public int Y { get; set; }
 
 		public Coordinate() {
 			Random rand = new Random();

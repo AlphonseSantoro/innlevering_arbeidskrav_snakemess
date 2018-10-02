@@ -4,31 +4,35 @@ using System.Diagnostics;
 using System.Linq;
 
 namespace SnakeMess {
-	class GameController {
 
-		public enum MoveDirection {
-			LEFT, RIGHT, UP, DOWN
-		}
+	public enum MoveDirection {
+		LEFT, RIGHT, UP, DOWN
+	}
+
+	public class GameController {
+
 
 		public static readonly int windowWidth = Console.WindowWidth;
 		public static readonly int windowHeight = Console.WindowHeight;
 		public static bool gameOver = false;
 		public static bool gamePaused = false;
 
-		private MoveDirection _newDir;
+		private MoveDirection _newDir = MoveDirection.RIGHT;
 		private MoveDirection _lastDir;
 		private Snake _snake;
 		private Food _food;
 		private Stopwatch _t;
 
-		GameController() {
-
+		public GameController() {
 			_snake = new Snake();
-			_food = new Food(); //TODO: Parameters!!!
+			_food = new Food(14, 10);
 			_t = new Stopwatch();
-
+			Console.CursorVisible = false;
+			Console.Title = "Høyskolen Kristiania - SNAKE";
 			GameLoop();
 		}
+
+		
 
 		private void GameLoop() {
 			_t.Start();
@@ -51,13 +55,18 @@ namespace SnakeMess {
 						_newDir = MoveDirection.DOWN;
 					else if(consoleKeyinfo.Key == ConsoleKey.LeftArrow && _lastDir != MoveDirection.RIGHT)
 						_newDir = MoveDirection.LEFT;
-					
+
+
 				}
 				if(!gamePaused) {
 					//Game speed delay
 					if(_t.ElapsedMilliseconds < 100)
 						continue;
 					_t.Restart();
+					_lastDir = _newDir;
+
+					//Draw food
+					_food.Draw();
 
 					//Move snake
 					_snake.Move(_newDir);
@@ -68,15 +77,19 @@ namespace SnakeMess {
 						break;
 					}
 
+					//Draw snake
+					_snake.DrawSnake();
+					
+
 					//If snake is on top of food, eat it
 					if(_snake.IsFoodInSnake(_food)) {
-						_snake.eat();
-						_food = new Food(); //TODO: Parameters!!!
+						_snake.Eat();
+						_food = new Food();
 					}
 					//While food is inside snake, respawn it
 					while(true) {
 						if(_snake.IsFoodInSnake(_food)) {
-							_food = new Food(); //TODO: Parameters!!!
+							_food = new Food();
 						} else {
 							break;
 						}
@@ -126,7 +139,7 @@ namespace SnakeMess {
 							}
 						}
 					}
-					*/
+					
 					if(!gameOver) {
 						Console.ForegroundColor = ConsoleColor.Yellow;
 						Console.SetCursorPosition(head.X, head.Y); Console.Write("0");
@@ -140,6 +153,7 @@ namespace SnakeMess {
 						Console.ForegroundColor = ConsoleColor.Yellow; Console.SetCursorPosition(newHead.X, newHead.Y); Console.Write("@");
 						last = _newDir;
 					}
+					*/
 				}
 
 			}
