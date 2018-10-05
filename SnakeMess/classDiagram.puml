@@ -21,7 +21,7 @@ class Item {
     Enum Marker
 }
 
-SnakePart --|> Item
+SnakePart --|> Item	
 class SnakePart{
 }
 

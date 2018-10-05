@@ -15,9 +15,9 @@ namespace SnakeMess {
 
 		public Snake(int startX = 10, int startY = 10, int length = 4){
             for (int i = 0; i < length-1; i++){
-                addPart(startX, startY, Markers.BODY);
+                AddPart(startX, startY, Markers.BODY);
             }
-            addPart(startX, startY, Markers.HEAD);
+            AddPart(startX, startY, Markers.HEAD);
         }
 
 		public void Move(MoveDirection direction) {
@@ -44,10 +44,10 @@ namespace SnakeMess {
 		    foreach(SnakePart part in SnakeParts) {
 			    if(part == newHead) return true;
 		    }
-		    if(head.Coord.X < 0 || head.Coord.X > GameController.windowWidth) {
+		    if(newHead.Coord.X < 0 || newHead.Coord.X >= GameController.windowWidth) {
 			    return true;
 		    }
-		    if(head.Coord.Y < 0	|| head.Coord.Y > GameController.windowHeight) {
+		    if(newHead.Coord.Y < 0	|| newHead.Coord.Y >= GameController.windowHeight) {
 			    return true;
 		    }
 		    return false;
@@ -84,7 +84,7 @@ namespace SnakeMess {
 
 		}
 
-		public void addPart(int x, int y, char marker) {
+		public void AddPart(int x, int y, char marker) {
 			SnakeParts.Add(new SnakePart(x, y, marker));
         }
 
