@@ -14,8 +14,6 @@
 		public static readonly char TAIL = ' ';
 		public static readonly char FOOD = '$';
 
-		
-
 		public static char GetMarker(Marker marker) {
 			switch(marker) {
 			case Marker.HEAD:
@@ -29,8 +27,5 @@
 			}
 			return '-';
 		}
-
-
-
 	}
 }

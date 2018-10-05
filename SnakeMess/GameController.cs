@@ -25,8 +25,8 @@ namespace SnakeMess {
 			_snake = new Snake();
 			_food = new Food(14, 10);
 			_t = new Stopwatch();
-			Console.CursorVisible = false;
-			Console.Title = "Høyskolen Kristiania - SNAKE";
+			Output.CursorVisible(false);
+			Output.Title("Høyskolen Kristiania - SNAKE");
 			GameLoop();
 		}
 
@@ -96,12 +96,6 @@ namespace SnakeMess {
 
 			}
 		}
-
-
-
-
-
-
 
 	}
 }

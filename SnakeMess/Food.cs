@@ -5,8 +5,8 @@ namespace SnakeMess {
 
 	    private static Random _rand = new Random();
 
-	    public Food() : base(RandInt(true), RandInt(false), Markers.GetMarker(Marker.FOOD)) { }
-	    public Food(int x, int y) : base(x, y, Markers.GetMarker(Marker.FOOD)) { }
+	    public Food() : base(RandInt(true), RandInt(false), Marker.FOOD) { }
+	    public Food(int x, int y) : base(x, y, Marker.FOOD) { }
 
 	    private static int RandInt(bool isWidth) {
 		    if(isWidth)
@@ -16,9 +16,8 @@ namespace SnakeMess {
 		}
 
 	    public void Draw() {
-		    Console.ForegroundColor = ConsoleColor.Green;
-			Console.SetCursorPosition(Coord.X, Coord.Y);
-			Console.Write(Icon);
+			Output.SetColor(ConsoleColor.Green);
+			Output.Draw(Coord.X, Coord.Y, Icon);
 	    }
 
     }
