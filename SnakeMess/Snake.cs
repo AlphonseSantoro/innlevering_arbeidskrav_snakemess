@@ -60,7 +60,7 @@ namespace SnakeMess {
 	    public void DrawSnake() {
 
 		    Console.ForegroundColor = ConsoleColor.Yellow;
-		    SnakePart sp;
+		    SnakePart snakePart;
 
 			if(!hasEaten) {
 				SnakeParts.RemoveAt(0);
@@ -73,8 +73,8 @@ namespace SnakeMess {
 			Console.SetCursorPosition(head.Coord.X, head.Coord.Y);
 		    Console.Write(head.icon);
 
-		    sp = SnakeParts.ElementAt(SnakeParts.Count - 2);
-		    Console.SetCursorPosition(sp.Coord.X, sp.Coord.Y);
+		    snakePart = SnakeParts.ElementAt(SnakeParts.Count - 2);
+		    Console.SetCursorPosition(snakePart.Coord.X, snakePart.Coord.Y);
 			Console.Write(Markers.BODY);
 
 		    SnakeParts.Add(newHead);
