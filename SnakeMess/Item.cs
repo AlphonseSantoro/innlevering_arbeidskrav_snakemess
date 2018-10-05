@@ -8,10 +8,6 @@ namespace SnakeMess{
 			Coord = new Coordinate(x, y);
 		}
 
-		public Item() {
-			Coord = new Coordinate();
-		}
-
 		public static bool operator ==(Item item1, Item item2){
 			if (item1.Coord == item2.Coord)
 				return true;
