@@ -1,8 +1,4 @@
 ﻿using System;
-using System.CodeDom;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
 
 namespace SnakeMess {
 	public class Coordinate {
@@ -35,5 +31,18 @@ namespace SnakeMess {
 			return false;
 		}
 
+		public override bool Equals(object obj) {
+			var coordinate = obj as Coordinate;
+			return coordinate != null &&
+				   X == coordinate.X &&
+				   Y == coordinate.Y;
+		}
+
+		public override int GetHashCode() {
+			var hashCode = 1861411795;
+			hashCode = hashCode * -1521134295 + X.GetHashCode();
+			hashCode = hashCode * -1521134295 + Y.GetHashCode();
+			return hashCode;
+		}
 	}
 }

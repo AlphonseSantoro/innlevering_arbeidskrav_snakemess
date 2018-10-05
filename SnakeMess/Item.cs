@@ -1,10 +1,10 @@
 namespace SnakeMess{
 	public class Item{
 		public Coordinate Coord{ get; set; }
-		public char icon{ get; set; }
+		public char Icon{ get; set; }
 
 		public Item(int x, int y, char icon){
-			this.icon = icon;
+			this.Icon = icon;
 			Coord = new Coordinate(x, y);
 		}
 

@@ -1,17 +1,16 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
 
 namespace SnakeMess {
     public class Snake {
         
 	    public List<SnakePart> SnakeParts = new List<SnakePart>();
 
-	    private bool hasEaten = false;
-	    private SnakePart head;
-	    private SnakePart tail;
-	    private SnakePart newHead;
+	    private bool _hasEaten = false;
+	    private SnakePart _head;
+	    private SnakePart _tail;
+	    private SnakePart _newHead;
 
 		public Snake(int startX = 10, int startY = 10, int length = 4){
             for (int i = 0; i < length-1; i++){
@@ -21,40 +20,40 @@ namespace SnakeMess {
         }
 
 		public void Move(MoveDirection direction) {
-			tail = new SnakePart(SnakeParts.First());
-			head = new SnakePart(SnakeParts.Last(), Markers.BODY);
-			newHead = new SnakePart(SnakeParts.Last(), Markers.HEAD);
+			_tail = new SnakePart(SnakeParts.First());
+			_head = new SnakePart(SnakeParts.Last(), Markers.BODY);
+			_newHead = new SnakePart(SnakeParts.Last(), Markers.HEAD);
 			switch(direction){
                 case MoveDirection.UP:
-					newHead.Coord.Y -= 1;
+					_newHead.Coord.Y -= 1;
                     break;
                 case MoveDirection.DOWN:
-					newHead.Coord.Y += 1;
+					_newHead.Coord.Y += 1;
 				break;
                 case MoveDirection.LEFT:
-					newHead.Coord.X -= 1;
+					_newHead.Coord.X -= 1;
 				break;
                 case MoveDirection.RIGHT:
-					newHead.Coord.X += 1;
+					_newHead.Coord.X += 1;
 				break;
             }
         }
 		
 	    public bool Collide() {
 		    foreach(SnakePart part in SnakeParts) {
-			    if(part == newHead) return true;
+			    if(part == _newHead) return true;
 		    }
-		    if(newHead.Coord.X < 0 || newHead.Coord.X >= GameController.windowWidth) {
+		    if(_newHead.Coord.X < 0 || _newHead.Coord.X >= GameController.windowWidth) {
 			    return true;
 		    }
-		    if(newHead.Coord.Y < 0	|| newHead.Coord.Y >= GameController.windowHeight) {
+		    if(_newHead.Coord.Y < 0	|| _newHead.Coord.Y >= GameController.windowHeight) {
 			    return true;
 		    }
 		    return false;
 	    }
 
 	    public void Eat() {
-		    hasEaten = true;
+		    _hasEaten = true;
 	    }
 
 	    public void DrawSnake() {
@@ -62,25 +61,25 @@ namespace SnakeMess {
 		    Console.ForegroundColor = ConsoleColor.Yellow;
 		    SnakePart snakePart;
 
-			if(!hasEaten) {
+			if(!_hasEaten) {
 				SnakeParts.RemoveAt(0);
-			    Console.SetCursorPosition(tail.Coord.X, tail.Coord.Y);
+			    Console.SetCursorPosition(_tail.Coord.X, _tail.Coord.Y);
 			    Console.Write(Markers.TAIL);
 			} else {
-				hasEaten = false;
+				_hasEaten = false;
 			}
 
-			Console.SetCursorPosition(head.Coord.X, head.Coord.Y);
-		    Console.Write(head.icon);
+			Console.SetCursorPosition(_head.Coord.X, _head.Coord.Y);
+		    Console.Write(_head.Icon);
 
 		    snakePart = SnakeParts.ElementAt(SnakeParts.Count - 2);
 		    Console.SetCursorPosition(snakePart.Coord.X, snakePart.Coord.Y);
 			Console.Write(Markers.BODY);
 
-		    SnakeParts.Add(newHead);
+		    SnakeParts.Add(_newHead);
 			Console.ForegroundColor = ConsoleColor.Yellow;
-		    Console.SetCursorPosition(newHead.Coord.X, newHead.Coord.Y);
-		    Console.Write(newHead.icon);
+		    Console.SetCursorPosition(_newHead.Coord.X, _newHead.Coord.Y);
+		    Console.Write(_newHead.Icon);
 
 		}
 
