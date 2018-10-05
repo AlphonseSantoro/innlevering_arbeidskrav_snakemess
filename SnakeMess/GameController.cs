@@ -94,66 +94,6 @@ namespace SnakeMess {
 							break;
 						}
 					}
-					
-
-					/*
-
-					Point tail = new Point(snake.First());
-					Point head = new Point(snake.Last());
-					Point newHead = new Point(head); // the new head position
-					switch(_newDir) {
-					case 0:
-						newHead.Y -= 1;
-						break;
-					case 1:
-						newHead.X += 1;
-						break;
-					case 2:
-						newHead.Y += 1;
-						break;
-					default:
-						newHead.X -= 1;
-						break;
-					}
-					if(newHead.X < 0 || newHead.X >= boardWidth)
-						gameOver = true;
-					else if(newHead.Y < 0 || newHead.Y >= boardHeight)
-						gameOver = true;
-					if(newHead.X == snakeFood.X && newHead.Y == snakeFood.Y) {
-						if(snake.Count + 1 >= boardWidth * boardHeight)
-							// No more room to place apples - game over.
-							gameOver = true;
-						else {
-							while(true) {
-								snakeFood.X = rand.Next(0, boardWidth); snakeFood.Y = rand.Next(0, boardHeight);
-								bool found = true;
-								foreach(Point i in snake)
-									if(i.X == snakeFood.X && i.Y == snakeFood.Y) {
-										found = false;
-										break;
-									}
-								if(found) {
-									inUse = true;
-									break;
-								}
-							}
-						}
-					}
-					
-					if(!gameOver) {
-						Console.ForegroundColor = ConsoleColor.Yellow;
-						Console.SetCursorPosition(head.X, head.Y); Console.Write("0");
-						if(!inUse) {
-							Console.SetCursorPosition(tail.X, tail.Y); Console.Write(" ");
-						} else {
-							Console.ForegroundColor = ConsoleColor.Green; Console.SetCursorPosition(snakeFood.X, snakeFood.Y); Console.Write("$");
-							inUse = false;
-						}
-						snake.Add(newHead);
-						Console.ForegroundColor = ConsoleColor.Yellow; Console.SetCursorPosition(newHead.X, newHead.Y); Console.Write("@");
-						last = _newDir;
-					}
-					*/
 				}
 
 			}
