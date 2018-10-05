@@ -13,15 +13,13 @@ namespace SnakeMess {
 	    private SnakePart tail;
 	    private SnakePart newHead;
 
-
 		public Snake(int startX = 10, int startY = 10, int length = 4){
             for (int i = 0; i < length-1; i++){
                 addPart(startX, startY, Markers.BODY);
             }
             addPart(startX, startY, Markers.HEAD);
         }
-		
-		
+
 		public void Move(MoveDirection direction) {
 			tail = new SnakePart(SnakeParts.First());
 			head = new SnakePart(SnakeParts.Last(), Markers.BODY);
@@ -41,7 +39,7 @@ namespace SnakeMess {
 				break;
             }
         }
-
+		
 	    public bool Collide() {
 		    foreach(SnakePart part in SnakeParts) {
 			    if(part == newHead) return true;
@@ -86,11 +84,10 @@ namespace SnakeMess {
 
 		}
 
-
 		public void addPart(int x, int y, char marker) {
 			SnakeParts.Add(new SnakePart(x, y, marker));
         }
-        
+
         public bool IsFoodInSnake(Food food) {
             foreach(SnakePart part in SnakeParts){
                 if(part == food) return true;
