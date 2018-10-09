@@ -8,6 +8,7 @@ namespace SnakeMess {
 	    public Food() : base(RandInt(true), RandInt(false), Marker.FOOD) { }
 	    public Food(int x, int y) : base(x, y, Marker.FOOD) { }
 
+		//Generate a random number, used to pick a random spawn point for the food
 	    private static int RandInt(bool isWidth) {
 		    if(isWidth)
 			    return _rand.Next(0, GameController.windowWidth);

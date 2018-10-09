@@ -4,10 +4,10 @@ using System.Linq;
 
 namespace SnakeMess {
     public class Snake {
-        
-	    public List<SnakePart> SnakeParts = new List<SnakePart>();
 
-	    private readonly ConsoleColor _snakeColor = ConsoleColor.Yellow;
+		private readonly ConsoleColor _snakeColor = ConsoleColor.Yellow;
+
+		private List<SnakePart> _snakeParts = new List<SnakePart>();
 	    private bool _hasEaten = false;
 	    private SnakePart _head;
 	    private SnakePart _tail;
@@ -25,9 +25,9 @@ namespace SnakeMess {
 		//Move the snake by creating a new head and move it by 1 character
 		// in a set direction depending on player input.
 		public void Move(MoveDirection direction) {
-			_tail = new SnakePart(SnakeParts.First(), Marker.TAIL); //First element, or last snake body part
-			_head = new SnakePart(SnakeParts.Last(), Marker.BODY); //Last "newHead"
-			_newHead = new SnakePart(SnakeParts.Last(), Marker.HEAD); //Same as head, but will be moved
+			_tail = new SnakePart(_snakeParts.First(), Marker.TAIL); //First element, or last snake body part
+			_head = new SnakePart(_snakeParts.Last(), Marker.BODY); //Last "newHead"
+			_newHead = new SnakePart(_snakeParts.Last(), Marker.HEAD); //Same as head, but will be moved
 			//Move the _newHead to create a motion
 			switch(direction){
                 case MoveDirection.UP:
@@ -48,7 +48,7 @@ namespace SnakeMess {
 		//Check if the snake is colliding with anything
 	    public bool Collide() {
 			//Loop to check collision with itself
-		    foreach(SnakePart part in SnakeParts) {
+		    foreach(SnakePart part in _snakeParts) {
 			    if(part == _newHead) return true;
 		    }
 			//Check if the _newHead position is colliding with the console walls
@@ -75,7 +75,8 @@ namespace SnakeMess {
 			//Check if snake has eaten or not since the last move
 			if(!_hasEaten) {
 				//If false, remove a snake part to stop it from growing
-				SnakeParts.RemoveAt(0);
+				_snakeParts.RemoveAt(0);
+
 				//Draw a "empty" space on last element
 				Output.Draw(_tail.Coord.X, _tail.Coord.Y, _tail.Icon);
 			} else {
@@ -87,19 +88,19 @@ namespace SnakeMess {
 			Output.Draw(_head.Coord.X, _head.Coord.Y, _head.Icon);
 
 			//Add the new head to the snake
-		    SnakeParts.Add(_newHead);
+		    _snakeParts.Add(_newHead);
 			Output.Draw(_newHead.Coord.X, _newHead.Coord.Y, _newHead.Icon);
 
 		}
 
 		//Add a new part to the snake
 		public void AddPart(int x, int y, Marker marker) {
-			SnakeParts.Add(new SnakePart(x, y, marker));
+			_snakeParts.Add(new SnakePart(x, y, marker));
         }
 
 		//Check if the snake head is over food
         public bool IsFoodInSnake(Food food) {
-            foreach(SnakePart part in SnakeParts){
+            foreach(SnakePart part in _snakeParts){
                 if(part == food) return true;
             }
             return false;

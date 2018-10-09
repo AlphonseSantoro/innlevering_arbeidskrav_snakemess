@@ -10,12 +10,12 @@ namespace SnakeMess{
 			this.Icon = Markers.GetMarker(marker);
 			Coord = new Coordinate(x, y);
 		}
-
+		
 		public Item(int x, int y, char icon) {
 			this.Icon = icon;
 			Coord = new Coordinate(x, y);
 		}
-
+		
 
 		public static bool operator ==(Item item1, Item item2){
 			if (item1.Coord == item2.Coord)

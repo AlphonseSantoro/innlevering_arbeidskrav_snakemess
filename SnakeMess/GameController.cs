@@ -29,7 +29,7 @@ namespace SnakeMess {
 			Output.Title("Høyskolen Kristiania - SNAKE");
 			GameLoop();
 		}
-
+		
 		
 
 		private void GameLoop() {
@@ -37,25 +37,9 @@ namespace SnakeMess {
 
 			//Game loops that loops untill its game over
 			while(!gameOver) {
+				//Check for player input
+				CheckKeyPress();
 
-				if(Console.KeyAvailable) {
-					ConsoleKeyInfo consoleKeyinfo = Console.ReadKey(true);
-					//Detect diffrent key presses
-					if(consoleKeyinfo.Key == ConsoleKey.Escape)
-						gameOver = true;
-					else if(consoleKeyinfo.Key == ConsoleKey.Spacebar)
-						gamePaused = !gamePaused;
-					else if(consoleKeyinfo.Key == ConsoleKey.UpArrow && _lastDir != MoveDirection.DOWN)
-						_newDir = MoveDirection.UP;
-					else if(consoleKeyinfo.Key == ConsoleKey.RightArrow && _lastDir != MoveDirection.LEFT)
-						_newDir = MoveDirection.RIGHT;
-					else if(consoleKeyinfo.Key == ConsoleKey.DownArrow && _lastDir != MoveDirection.UP)
-						_newDir = MoveDirection.DOWN;
-					else if(consoleKeyinfo.Key == ConsoleKey.LeftArrow && _lastDir != MoveDirection.RIGHT)
-						_newDir = MoveDirection.LEFT;
-
-
-				}
 				if(!gamePaused) {
 					//Game speed delay
 					if(_t.ElapsedMilliseconds < 100)
@@ -96,6 +80,27 @@ namespace SnakeMess {
 
 			}
 		}
+
+		
+		private void CheckKeyPress() {
+			if(Console.KeyAvailable) {
+				ConsoleKeyInfo consoleKeyinfo = Console.ReadKey(true);
+				//Detect diffrent key presses
+				if(consoleKeyinfo.Key == ConsoleKey.Escape)
+					gameOver = true;
+				else if(consoleKeyinfo.Key == ConsoleKey.Spacebar)
+					gamePaused = !gamePaused;
+				else if(consoleKeyinfo.Key == ConsoleKey.UpArrow && _lastDir != MoveDirection.DOWN)
+					_newDir = MoveDirection.UP;
+				else if(consoleKeyinfo.Key == ConsoleKey.RightArrow && _lastDir != MoveDirection.LEFT)
+					_newDir = MoveDirection.RIGHT;
+				else if(consoleKeyinfo.Key == ConsoleKey.DownArrow && _lastDir != MoveDirection.UP)
+					_newDir = MoveDirection.DOWN;
+				else if(consoleKeyinfo.Key == ConsoleKey.LeftArrow && _lastDir != MoveDirection.RIGHT)
+					_newDir = MoveDirection.LEFT;
+			}
+		}
+
 
 	}
 }
