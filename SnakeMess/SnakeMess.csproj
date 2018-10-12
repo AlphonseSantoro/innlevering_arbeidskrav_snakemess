@@ -55,6 +55,7 @@
     <Compile Include="SnakePart.cs" />
   </ItemGroup>
   <ItemGroup>
+    <Content Include="afterDevelop.puml" />
     <Content Include="classDiagram.puml" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
