@@ -1,7 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
 
 namespace SnakeMess {
 	class Output {
@@ -11,8 +8,8 @@ namespace SnakeMess {
 			Console.CursorVisible = input;
 		}
 
-		public static void Title(string str) {
-			Console.Title = str;
+		public static void Title(string title) {
+			Console.Title = title;
 		}
 
 		public static void Draw(int x, int y, char icon) {

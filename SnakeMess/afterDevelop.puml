@@ -69,6 +69,13 @@ class Coordinate{
     + {static} operator !=(): bool
 }
 
+class Output{
+	+ {static} CursorVisible(input: bool): void
+	+ {static} Title(title: string): void
+	+ {static} Draw(x: int, y: int, icon: char): void
+	+ {static} SetColor(color: ConsoleColor): void
+}
+
 class Markers{
     + {static} HEAD: char
     + {static} BODY: char
